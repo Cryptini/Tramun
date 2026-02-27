@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils/cn';
 interface CardProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   variant?: 'default' | 'elevated' | 'glass' | 'outline';
   padding?: 'none' | 'sm' | 'md' | 'lg';
   onClick?: () => void;
@@ -28,6 +29,7 @@ const paddingStyles = {
 export function Card({
   children,
   className,
+  style,
   variant = 'default',
   padding = 'md',
   onClick,
@@ -36,6 +38,7 @@ export function Card({
   return (
     <div
       onClick={onClick}
+      style={style}
       className={cn(
         'rounded-2xl transition-all duration-150',
         variantStyles[variant],
