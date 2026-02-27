@@ -1,16 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { VaultCard } from '@/components/earn/VaultCard';
 import { DepositModal } from '@/components/earn/DepositModal';
 import { OnrampModal } from '@/components/onramp/OnrampModal';
-import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { useAppStore } from '@/store/appStore';
 import { MASTER_VAULTS, EXPLORE_VAULTS } from '@/lib/veda/constants';
 import { formatUsd, formatApy } from '@/lib/utils/format';
-import { Plus, ArrowUpRight, Shield, Bell, ChevronRight } from 'lucide-react';
+import { Plus, ArrowUpRight, Shield, Bell } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import type { MasterVault } from '@/types/vault';
 
@@ -200,28 +198,6 @@ export function EarnTab() {
         </div>
       )}
 
-      {/* ── Active Vaults ──────────────────────────────────── */}
-      <div className="mb-5">
-        <div className="flex items-center justify-between mb-3 px-1">
-          <h2 className="text-[17px] font-bold text-text-primary">Vaults</h2>
-          <span className="text-xs text-text-muted">{MASTER_VAULTS.length} available</span>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3">
-          {MASTER_VAULTS.map((vault) => {
-            const position = vaultPositions.find(p => p.vaultId === vault.id);
-            return (
-              <VaultCard
-                key={vault.id}
-                vault={vault}
-                position={position}
-                onDeposit={() => setDepositVault(vault)}
-                onWithdraw={() => { /* open withdraw modal */ }}
-              />
-            );
-          })}
-        </div>
-      </div>
 
       {/* ── Explore — Coming Soon Strategies ───────────────── */}
       <div className="mb-5">
