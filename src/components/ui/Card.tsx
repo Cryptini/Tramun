@@ -10,12 +10,13 @@ interface CardProps {
   padding?: 'none' | 'sm' | 'md' | 'lg';
   onClick?: () => void;
   interactive?: boolean;
+  style?: React.CSSProperties;
 }
 
 const variantStyles = {
-  default: 'bg-bg-card border border-border/50',
-  elevated: 'bg-bg-elevated border border-border',
-  glass: 'bg-bg-card/80 border border-border/30 backdrop-blur-sm',
+  default: 'bg-white border border-border/60 shadow-card',
+  elevated: 'bg-bg-elevated border border-border/40',
+  glass: 'bg-white/80 border border-border/30 backdrop-blur-sm shadow-card',
   outline: 'bg-transparent border border-border',
 };
 
@@ -34,16 +35,17 @@ export function Card({
   padding = 'md',
   onClick,
   interactive = false,
+  style,
 }: CardProps) {
   return (
     <div
       onClick={onClick}
       style={style}
       className={cn(
-        'rounded-2xl transition-all duration-150',
+        'rounded-2xl transition-all duration-200',
         variantStyles[variant],
         paddingStyles[padding],
-        (interactive || onClick) && 'cursor-pointer active:scale-[0.98] active:opacity-90',
+        (interactive || onClick) && 'cursor-pointer active:scale-[0.98] active:opacity-90 hover:shadow-card-hover',
         className
       )}
     >

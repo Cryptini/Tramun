@@ -16,7 +16,7 @@ export function TradeTab() {
   const { isAuthenticated } = useAppStore();
 
   return (
-    <div className="px-4 pt-2 animate-fade-in space-y-4">
+    <div className="px-5 pt-2 animate-fade-in space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-[22px] font-bold text-text-primary">Trade</h1>
@@ -27,17 +27,17 @@ export function TradeTab() {
         </div>
       </div>
 
-      {/* Account summary (if logged in) */}
+      {/* Account summary */}
       {isAuthenticated && (
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-bg-elevated rounded-xl p-3">
-            <p className="text-[10px] text-text-muted uppercase tracking-wide mb-0.5">Account Value</p>
+        <div className="grid grid-cols-2 gap-2.5">
+          <div className="bg-gray-50 rounded-2xl p-3.5 border border-border/30">
+            <p className="text-[10px] text-text-muted uppercase tracking-wider mb-0.5 font-medium">Account Value</p>
             <p className="text-sm font-bold font-numeric text-text-primary">
               {formatUsd(accountValue)}
             </p>
           </div>
-          <div className="bg-bg-elevated rounded-xl p-3">
-            <p className="text-[10px] text-text-muted uppercase tracking-wide mb-0.5">Available</p>
+          <div className="bg-gray-50 rounded-2xl p-3.5 border border-border/30">
+            <p className="text-[10px] text-text-muted uppercase tracking-wider mb-0.5 font-medium">Available</p>
             <p className="text-sm font-bold font-numeric text-text-primary">
               {formatUsd(withdrawable)}
             </p>
@@ -61,17 +61,17 @@ export function TradeTab() {
       {/* Open positions */}
       {positions.length > 0 && (
         <div>
-          <h2 className="text-[15px] font-semibold text-text-primary mb-2">Open Positions</h2>
+          <h2 className="text-[15px] font-bold text-text-primary mb-2">Open Positions</h2>
           <PositionsList />
         </div>
       )}
 
-      {/* Info: dual wallet option */}
-      <Card variant="outline" className="border-border/30 mb-4">
+      {/* Info */}
+      <Card variant="outline" className="border-border/50 mb-4">
         <div className="flex items-start gap-3">
           <Info size={14} className="text-text-muted mt-0.5 flex-shrink-0" />
           <div>
-            <p className="text-xs font-medium text-text-secondary mb-0.5">
+            <p className="text-xs font-semibold text-text-primary mb-0.5">
               About your trading wallet
             </p>
             <p className="text-xs text-text-muted leading-relaxed">

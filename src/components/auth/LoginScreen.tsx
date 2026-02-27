@@ -9,27 +9,13 @@ interface LoginScreenProps {
   onLoginComplete?: () => void;
 }
 
-/**
- * Login screen using Privy's embedded wallet infrastructure.
- * In production: wraps usePrivy() hook from @privy-io/react-auth.
- * Users see only Google/Apple — no wallet address until they want it.
- */
 export function LoginScreen({ onLoginComplete }: LoginScreenProps) {
   const { setUser } = useAppStore();
   const [loading, setLoading] = useState<'google' | 'apple' | null>(null);
 
-  /**
-   * Production implementation:
-   * const { login } = usePrivy();
-   * await login({ loginMethods: ['google'] });
-   *
-   * After login, Privy auto-creates an embedded wallet.
-   * We read the wallet address from useWallets() and store in our state.
-   */
   const handleLogin = async (method: 'google' | 'apple') => {
     setLoading(method);
     try {
-      // MOCK: Simulate Privy auth + wallet creation
       await new Promise(r => setTimeout(r, 1500));
 
       const mockUser: TramuntanaUser = {
@@ -60,11 +46,11 @@ export function LoginScreen({ onLoginComplete }: LoginScreenProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       {/* Hero section */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
         {/* Logo */}
-        <div className="w-20 h-20 rounded-3xl bg-primary-gradient flex items-center justify-center shadow-glow-primary mb-6">
+        <div className="w-20 h-20 rounded-3xl bg-primary flex items-center justify-center shadow-button mb-6 animate-float">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
             <path d="M12 2L3 7v10l9 5 9-5V7L12 2z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
             <path d="M12 2v20M3 7l9 5 9-5" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
@@ -73,7 +59,7 @@ export function LoginScreen({ onLoginComplete }: LoginScreenProps) {
 
         <h1 className="text-3xl font-bold text-text-primary mb-3">
           Welcome to<br />
-          <span className="gradient-text-primary">Tramuntana</span>
+          <span className="gradient-text-hero">Tramuntana</span>
         </h1>
 
         <p className="text-text-secondary text-base leading-relaxed max-w-[280px]">
@@ -83,14 +69,14 @@ export function LoginScreen({ onLoginComplete }: LoginScreenProps) {
         {/* Features */}
         <div className="mt-8 space-y-3 text-left w-full max-w-[300px]">
           {[
-            { icon: '🏦', text: 'Earn up to 12% APY on USDC & BTC' },
-            { icon: '⚡', text: 'Trade perps powered by Hyperliquid' },
-            { icon: '🔐', text: 'Non-custodial — you own your keys' },
-            { icon: '💳', text: 'Top up with Apple Pay or bank transfer' },
+            { icon: '🏦', text: 'Earn up to 12% APY on USDC & BTC', color: 'bg-primary/8' },
+            { icon: '⚡', text: 'Trade perps powered by Hyperliquid', color: 'bg-accent-blue/8' },
+            { icon: '🔐', text: 'Non-custodial — you own your keys', color: 'bg-success/8' },
+            { icon: '💳', text: 'Top up with Apple Pay or bank transfer', color: 'bg-accent-coral/8' },
           ].map((f) => (
-            <div key={f.text} className="flex items-center gap-3">
+            <div key={f.text} className={`flex items-center gap-3 ${f.color} rounded-xl px-3 py-2.5`}>
               <span className="text-xl">{f.icon}</span>
-              <span className="text-sm text-text-secondary">{f.text}</span>
+              <span className="text-sm text-text-primary font-medium">{f.text}</span>
             </div>
           ))}
         </div>
@@ -131,10 +117,10 @@ export function LoginScreen({ onLoginComplete }: LoginScreenProps) {
           Continue with Apple
         </Button>
 
-        <p className="text-center text-xs text-text-muted px-4">
+        <p className="text-center text-xs text-text-muted px-4 leading-relaxed">
           By continuing, you agree to our{' '}
-          <span className="text-primary underline">Terms of Service</span> and{' '}
-          <span className="text-primary underline">Privacy Policy</span>.
+          <span className="text-primary font-medium">Terms of Service</span> and{' '}
+          <span className="text-primary font-medium">Privacy Policy</span>.
           Your embedded wallet is self-custodial.
         </p>
       </div>

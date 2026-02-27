@@ -35,7 +35,7 @@ export interface UnderlyingVault {
 
 /** Tramuntana Master Vault — the user-facing vault */
 export interface MasterVault {
-  id: 'stablecoin' | 'btc-assets';
+  id: string;
   name: string;
   description: string;
   icon: string;
@@ -55,6 +55,20 @@ export interface MasterVault {
   managementFee: number;   // Annual fee (0.005 = 0.5%)
   performanceFee: number;  // Performance fee (0.1 = 10%)
   swapFee: number;         // Fee on rebalancing swaps (0.001 = 0.1%)
+}
+
+/** Upcoming / Explore vault strategy — not yet depositable */
+export interface ExploreVault {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  asset: VaultAsset | string;
+  estimatedApy: number;
+  tvl?: number;
+  status: 'coming_soon' | 'active' | 'waitlist';
+  tags: string[];
+  color: string;           // Accent color for the card
 }
 
 /** User's deposit in a vault */

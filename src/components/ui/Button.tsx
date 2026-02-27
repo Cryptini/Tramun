@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils/cn';
 import { type ButtonHTMLAttributes, forwardRef } from 'react';
-import { motion } from 'framer-motion';
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'outline';
 type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -17,12 +16,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles: Record<Variant, string> = {
-  primary: 'bg-primary-gradient text-white shadow-glow-primary hover:opacity-90 active:opacity-80',
-  secondary: 'bg-bg-elevated border border-border text-text-primary hover:bg-[#1C2E45] active:bg-[#162640]',
-  ghost: 'bg-transparent text-text-secondary hover:bg-white/5 active:bg-white/10',
-  danger: 'bg-danger-gradient text-white hover:opacity-90 active:opacity-80',
-  success: 'bg-success-gradient text-white hover:opacity-90 active:opacity-80',
-  outline: 'bg-transparent border border-primary text-primary hover:bg-primary-muted active:opacity-80',
+  primary: 'bg-primary text-white shadow-button hover:bg-primary-dark active:bg-primary-dark',
+  secondary: 'bg-bg-elevated border border-border text-text-primary hover:bg-gray-100 active:bg-gray-200',
+  ghost: 'bg-transparent text-text-secondary hover:bg-black/5 active:bg-black/10',
+  danger: 'bg-danger text-white hover:opacity-90 active:opacity-80',
+  success: 'bg-success text-white hover:opacity-90 active:opacity-80',
+  outline: 'bg-transparent border-2 border-primary text-primary hover:bg-primary-muted active:opacity-80',
 };
 
 const sizeStyles: Record<Size, string> = {
@@ -56,8 +55,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={isDisabled}
         className={cn(
-          'inline-flex items-center justify-center font-medium transition-all duration-150',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50',
+          'inline-flex items-center justify-center font-semibold transition-all duration-150',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40',
           'disabled:opacity-40 disabled:cursor-not-allowed',
           variantStyles[variant],
           sizeStyles[size],

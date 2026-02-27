@@ -44,20 +44,20 @@ function PositionRow({
   const isProfitable = position.pnl >= 0;
 
   return (
-    <Card variant="elevated" padding="sm">
+    <Card variant="default" padding="sm">
       <div className="flex items-start justify-between mb-2">
         <div className="flex items-center gap-2">
           <Badge variant={isLong ? 'success' : 'danger'} size="sm">
             {isLong ? 'LONG' : 'SHORT'}
           </Badge>
-          <span className="text-sm font-semibold text-text-primary">
+          <span className="text-sm font-bold text-text-primary">
             {position.coin}-PERP
           </span>
           <Badge variant="neutral" size="sm">{formatLeverage(position.leverage)}</Badge>
         </div>
 
         <div className={cn(
-          'text-sm font-semibold font-numeric',
+          'text-sm font-bold font-numeric',
           isProfitable ? 'text-success' : 'text-danger'
         )}>
           {isProfitable ? '+' : ''}{formatUsd(position.pnl)}
@@ -65,27 +65,27 @@ function PositionRow({
       </div>
 
       <div className="grid grid-cols-3 gap-2 mb-2.5">
-        <div>
-          <p className="text-[10px] text-text-muted">Entry</p>
-          <p className="text-xs font-numeric text-text-secondary">${formatPrice(position.entryPx)}</p>
+        <div className="bg-gray-50 rounded-lg p-2">
+          <p className="text-[10px] text-text-muted font-medium">Entry</p>
+          <p className="text-xs font-numeric font-medium text-text-primary">${formatPrice(position.entryPx)}</p>
         </div>
-        <div>
-          <p className="text-[10px] text-text-muted">Mark</p>
-          <p className="text-xs font-numeric text-text-primary">${formatPrice(position.markPx)}</p>
+        <div className="bg-gray-50 rounded-lg p-2">
+          <p className="text-[10px] text-text-muted font-medium">Mark</p>
+          <p className="text-xs font-numeric font-bold text-text-primary">${formatPrice(position.markPx)}</p>
         </div>
-        <div>
-          <p className="text-[10px] text-text-muted">Liq. Price</p>
-          <p className="text-xs font-numeric text-danger">${formatPrice(position.liquidationPx)}</p>
+        <div className="bg-danger/5 rounded-lg p-2">
+          <p className="text-[10px] text-text-muted font-medium">Liq.</p>
+          <p className="text-xs font-numeric font-bold text-danger">${formatPrice(position.liquidationPx)}</p>
         </div>
       </div>
 
       <div className="flex items-center justify-between">
         <div className="text-xs text-text-muted">
-          Size: <span className="text-text-secondary font-numeric">{position.szi.toFixed(4)} {position.coin}</span>
+          Size: <span className="text-text-primary font-numeric font-medium">{position.szi.toFixed(4)} {position.coin}</span>
           {' · '}
-          Margin: <span className="text-text-secondary font-numeric">{formatUsd(position.margin)}</span>
+          Margin: <span className="text-text-primary font-numeric font-medium">{formatUsd(position.margin)}</span>
         </div>
-        <Button variant="ghost" size="xs" onClick={onClose} className="text-danger hover:bg-danger-muted h-6">
+        <Button variant="ghost" size="xs" onClick={onClose} className="text-danger hover:bg-danger/5 h-6">
           Close
         </Button>
       </div>

@@ -10,25 +10,25 @@ const TABS: Array<{
   icon: React.ReactNode;
   activeIcon: React.ReactNode;
 }> = [
-  {
-    id: 'earn',
-    label: 'Earn',
-    icon: <TrendingUp size={22} strokeWidth={1.5} />,
-    activeIcon: <TrendingUp size={22} strokeWidth={2.5} />,
-  },
-  {
-    id: 'portfolio',
-    label: 'Portfolio',
-    icon: <PieChart size={22} strokeWidth={1.5} />,
-    activeIcon: <PieChart size={22} strokeWidth={2.5} />,
-  },
-  {
-    id: 'trade',
-    label: 'Trade',
-    icon: <Zap size={22} strokeWidth={1.5} />,
-    activeIcon: <Zap size={22} strokeWidth={2.5} />,
-  },
-];
+    {
+      id: 'earn',
+      label: 'Earn',
+      icon: <TrendingUp size={22} strokeWidth={1.5} />,
+      activeIcon: <TrendingUp size={22} strokeWidth={2.5} />,
+    },
+    {
+      id: 'portfolio',
+      label: 'Portfolio',
+      icon: <PieChart size={22} strokeWidth={1.5} />,
+      activeIcon: <PieChart size={22} strokeWidth={2.5} />,
+    },
+    {
+      id: 'trade',
+      label: 'Trade',
+      icon: <Zap size={22} strokeWidth={1.5} />,
+      activeIcon: <Zap size={22} strokeWidth={2.5} />,
+    },
+  ];
 
 export function TabBar() {
   const { activeTab, setActiveTab } = useAppStore();
@@ -38,11 +38,8 @@ export function TabBar() {
       className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-30"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      {/* Gradient fade */}
-      <div className="absolute inset-x-0 top-[-20px] h-5 bg-gradient-to-b from-transparent to-bg-base/80 pointer-events-none" />
-
       {/* Tab bar */}
-      <div className="tab-bar-blur bg-bg-surface/90 border-t border-border/50 px-2 h-[72px] flex items-center">
+      <div className="tab-bar-blur bg-white/95 border-t border-gray-100 px-2 h-[72px] flex items-center shadow-elevated">
         <div className="flex items-center w-full">
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
@@ -59,7 +56,7 @@ export function TabBar() {
               >
                 {/* Active indicator pill */}
                 {isActive && (
-                  <span className="absolute top-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full" />
+                  <span className="absolute top-0.5 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-primary rounded-full" />
                 )}
 
                 {/* Icon */}
@@ -75,7 +72,7 @@ export function TabBar() {
                 {/* Label */}
                 <span
                   className={cn(
-                    'text-[11px] font-medium transition-all duration-200',
+                    'text-[11px] font-semibold transition-all duration-200',
                     isActive ? 'text-primary' : 'text-text-muted'
                   )}
                 >

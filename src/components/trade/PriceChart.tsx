@@ -13,8 +13,8 @@ type Interval = typeof INTERVALS[number];
 function ChartTooltip({ active, payload }: { active?: boolean; payload?: Array<{ value: number }> }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-bg-elevated border border-border rounded-lg px-2.5 py-1.5 shadow-modal">
-      <p className="text-xs font-semibold text-text-primary font-numeric">
+    <div className="bg-white border border-border rounded-xl px-3 py-1.5 shadow-elevated">
+      <p className="text-xs font-bold text-text-primary font-numeric">
         ${formatPrice(payload[0].value)}
       </p>
     </div>
@@ -40,20 +40,20 @@ export function PriceChart() {
   const firstPrice = data[0]?.price ?? 0;
   const lastPrice = data[data.length - 1]?.price ?? 0;
   const isPositive = lastPrice >= firstPrice;
-  const strokeColor = isPositive ? '#10B981' : '#F43F5E';
+  const strokeColor = isPositive ? '#00B894' : '#FF6B6B';
 
   return (
     <div className="w-full">
       {/* Interval selector */}
-      <div className="flex items-center gap-1 mb-3">
+      <div className="flex items-center gap-1 mb-3 bg-gray-50 rounded-xl p-1">
         {INTERVALS.map((iv) => (
           <button
             key={iv}
             onClick={() => setInterval(iv)}
             className={cn(
-              'flex-1 h-7 rounded-lg text-xs font-medium transition-all',
+              'flex-1 h-7 rounded-lg text-xs font-semibold transition-all',
               interval === iv
-                ? 'bg-primary-muted text-primary'
+                ? 'bg-white text-primary shadow-card'
                 : 'text-text-muted hover:text-text-secondary'
             )}
           >
@@ -69,7 +69,7 @@ export function PriceChart() {
             <AreaChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
               <defs>
                 <linearGradient id="tradeGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.2} />
+                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.15} />
                   <stop offset="90%" stopColor={strokeColor} stopOpacity={0.01} />
                 </linearGradient>
               </defs>
@@ -83,10 +83,10 @@ export function PriceChart() {
                 type="monotone"
                 dataKey="price"
                 stroke={strokeColor}
-                strokeWidth={1.5}
+                strokeWidth={2}
                 fill="url(#tradeGradient)"
                 dot={false}
-                activeDot={{ r: 3, fill: strokeColor, strokeWidth: 0 }}
+                activeDot={{ r: 4, fill: strokeColor, strokeWidth: 2, stroke: 'white' }}
               />
             </AreaChart>
           </ResponsiveContainer>

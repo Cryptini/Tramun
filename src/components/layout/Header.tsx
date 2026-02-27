@@ -41,10 +41,10 @@ export function Header() {
 
   return (
     <>
-      <header className="flex items-center justify-between px-4 pt-[max(env(safe-area-inset-top),16px)] pb-3">
+      <header className="flex items-center justify-between px-5 pt-[max(env(safe-area-inset-top),16px)] pb-3">
         {/* Logo */}
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-primary-gradient flex items-center justify-center shadow-glow-primary">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-button">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path
                 d="M12 2L3 7v10l9 5 9-5V7L12 2z"
@@ -60,7 +60,7 @@ export function Header() {
               />
             </svg>
           </div>
-          <span className="text-[17px] font-bold tracking-tight text-text-primary">
+          <span className="text-[18px] font-bold tracking-tight text-text-primary">
             Tramuntana
           </span>
         </div>
@@ -68,10 +68,10 @@ export function Header() {
         {/* Right actions */}
         <div className="flex items-center gap-2">
           {/* Notifications */}
-          <button className="relative w-9 h-9 flex items-center justify-center rounded-xl bg-bg-elevated border border-border text-text-secondary">
-            <Bell size={17} />
+          <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-text-secondary hover:bg-gray-100 transition-colors">
+            <Bell size={18} />
             {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-danger rounded-full text-[9px] font-bold flex items-center justify-center text-white">
+              <span className="absolute top-0.5 right-0.5 w-4 h-4 bg-danger rounded-full text-[9px] font-bold flex items-center justify-center text-white">
                 {unreadCount}
               </span>
             )}
@@ -80,7 +80,7 @@ export function Header() {
           {/* Account */}
           <button
             onClick={() => setShowAccount(true)}
-            className="w-9 h-9 flex items-center justify-center rounded-xl bg-primary-muted border border-primary/20 text-primary font-bold text-sm"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-bold text-sm shadow-button"
           >
             {isAuthenticated && user?.displayName
               ? user.displayName.charAt(0).toUpperCase()
@@ -100,20 +100,20 @@ export function Header() {
           {isAuthenticated && user ? (
             <div className="space-y-4">
               {/* Portfolio summary */}
-              <Card variant="elevated">
-                <p className="text-sm text-text-secondary">Total Portfolio</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <p className="text-2xl font-bold font-numeric text-text-primary">
+              <div className="hero-banner p-5 text-white">
+                <p className="text-sm opacity-80">Total Portfolio</p>
+                <div className="flex items-center gap-3 mt-1.5 relative z-10">
+                  <p className="text-3xl font-bold font-numeric">
                     {showAddresses ? formatUsd(portfolioSummary.totalValueUsd) : '••••••'}
                   </p>
-                  <button onClick={toggleAddressVisibility} className="text-text-muted">
-                    {showAddresses ? <EyeOff size={16} /> : <Eye size={16} />}
+                  <button onClick={toggleAddressVisibility} className="text-white/60 hover:text-white/90 transition-colors">
+                    {showAddresses ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
-              </Card>
+              </div>
 
               {/* Wallet address */}
-              <Card variant="elevated">
+              <Card variant="default">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs text-text-muted mb-1">Wallet Address</p>
@@ -126,7 +126,7 @@ export function Header() {
                   <div className="flex gap-2">
                     <button
                       onClick={handleCopyAddress}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/8 text-text-secondary"
+                      className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-50 text-text-secondary hover:bg-gray-100 transition-colors"
                     >
                       <Copy size={14} />
                     </button>
@@ -134,7 +134,7 @@ export function Header() {
                       href={`https://etherscan.io/address/${user.vaultWallet.address}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/8 text-text-secondary"
+                      className="w-9 h-9 flex items-center justify-center rounded-full bg-gray-50 text-text-secondary hover:bg-gray-100 transition-colors"
                     >
                       <ExternalLink size={14} />
                     </a>
@@ -146,7 +146,7 @@ export function Header() {
               </Card>
 
               {/* Login method */}
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between text-sm px-1">
                 <span className="text-text-muted">Logged in via</span>
                 <Badge variant="neutral">
                   {user.loginMethod === 'google' ? '🔵 Google' : '🍎 Apple'}

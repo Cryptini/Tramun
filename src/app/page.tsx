@@ -13,19 +13,18 @@ function AppShell() {
   const { activeTab, isAuthenticated } = useAppStore();
 
   // Demo mode: allow browsing without login
-  // In production: show login for actions requiring wallet
   const showLogin = !isAuthenticated && false; // Set to true to enforce login
 
   if (showLogin) {
     return (
-      <main className="flex flex-col h-dvh bg-bg-base">
+      <main className="flex flex-col h-dvh bg-white">
         <LoginScreen />
       </main>
     );
   }
 
   return (
-    <main className="flex flex-col h-dvh bg-bg-base overflow-hidden">
+    <main className="flex flex-col h-dvh bg-white overflow-hidden">
       {/* Fixed header */}
       <Header />
 

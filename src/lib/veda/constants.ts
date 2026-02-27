@@ -176,3 +176,56 @@ export const PLATFORM_FEES = {
   /** Protocol fee for vault management */
   MANAGEMENT_FEE_ANNUAL_BPS: 50, // 0.5%
 } as const;
+
+// ── Explore Vaults (upcoming / coming soon) ─────────────────
+import type { ExploreVault } from '@/types/vault';
+
+export const EXPLORE_VAULTS: ExploreVault[] = [
+  {
+    id: 'eth-yield',
+    name: 'ETH Yield',
+    description: 'Earn native ETH yield through restaking and liquid staking protocols',
+    icon: 'Ξ',
+    asset: 'ETH',
+    estimatedApy: 0.064,
+    tvl: 18_500_000,
+    status: 'coming_soon',
+    tags: ['Restaking', 'Liquid Staking', 'EigenLayer'],
+    color: '#627EEA',
+  },
+  {
+    id: 'hype-vault',
+    name: 'HYPE Vault',
+    description: 'Hyperliquid ecosystem yield via HLP staking and liquidity provision',
+    icon: '⚡',
+    asset: 'HYPE',
+    estimatedApy: 0.182,
+    status: 'coming_soon',
+    tags: ['Hyperliquid', 'HLP', 'Market Making'],
+    color: '#00CEC9',
+  },
+  {
+    id: 'sol-staking',
+    name: 'SOL Staking',
+    description: 'Solana staking and MEV rewards via Jito and Marinade',
+    icon: '◎',
+    asset: 'SOL',
+    estimatedApy: 0.078,
+    tvl: 12_200_000,
+    status: 'coming_soon',
+    tags: ['Staking', 'MEV', 'Jito'],
+    color: '#9945FF',
+  },
+  {
+    id: 'rwa-yield',
+    name: 'Real-World Assets',
+    description: 'Tokenized T-Bills and private credit via Ondo and Maple Finance',
+    icon: '🏛️',
+    asset: 'USDC',
+    estimatedApy: 0.052,
+    tvl: 45_000_000,
+    status: 'waitlist',
+    tags: ['T-Bills', 'Private Credit', 'RWA'],
+    color: '#FDCB6E',
+  },
+];

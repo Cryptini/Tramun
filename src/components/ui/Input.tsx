@@ -42,7 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <div
           className={cn(
             'flex items-center w-full rounded-xl',
-            'bg-bg-elevated border transition-colors',
+            'bg-gray-50 border transition-colors',
             error
               ? 'border-danger/60 focus-within:border-danger'
               : 'border-border focus-within:border-primary/60',
@@ -101,7 +101,7 @@ export function AmountPresets({
         <button
           key={amount}
           onClick={() => onSelect(amount)}
-          className="flex-1 h-9 text-sm font-medium rounded-xl bg-bg-elevated border border-border text-text-secondary hover:border-primary/50 hover:text-primary active:scale-95 transition-all"
+          className="flex-1 h-9 text-sm font-semibold rounded-xl bg-gray-50 border border-border text-text-secondary hover:border-primary/50 hover:text-primary active:scale-95 transition-all"
         >
           ${amount >= 1000 ? `${amount / 1000}K` : amount}
         </button>

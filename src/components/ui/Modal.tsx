@@ -14,7 +14,7 @@ interface ModalProps {
   showHandle?: boolean;
 }
 
-/** Bottom sheet modal — native mobile feel */
+/** Bottom sheet modal — Revolut-style clean modal */
 export function Modal({
   isOpen,
   onClose,
@@ -52,7 +52,7 @@ export function Modal({
       {/* Backdrop */}
       <div
         ref={overlayRef}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 animate-fade-in"
+        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 animate-fade-in"
         style={{ maxWidth: '100vw' }}
         onClick={(e) => {
           if (e.target === overlayRef.current) onClose();
@@ -72,7 +72,7 @@ export function Modal({
         {/* Drag handle */}
         {showHandle && (
           <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 bg-white/20 rounded-full" />
+            <div className="w-10 h-1 bg-gray-200 rounded-full" />
           </div>
         )}
 
@@ -81,7 +81,7 @@ export function Modal({
           <div className="flex items-start justify-between px-5 py-4">
             <div>
               {title && (
-                <h2 id="modal-title" className="text-lg font-semibold text-text-primary">
+                <h2 id="modal-title" className="text-lg font-bold text-text-primary">
                   {title}
                 </h2>
               )}
@@ -91,7 +91,7 @@ export function Modal({
             </div>
             <button
               onClick={onClose}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/8 text-text-secondary hover:text-text-primary transition-colors mt-0.5"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-text-secondary hover:text-text-primary transition-colors mt-0.5"
               aria-label="Close"
             >
               <X size={16} />

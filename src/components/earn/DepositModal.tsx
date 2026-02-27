@@ -41,11 +41,8 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
   const handleConfirm = async () => {
     setIsLoading(true);
     try {
-      // Production: call Veda BoringVault teller.deposit()
-      // This requires: approve USDC, then call teller.deposit(amount, shares, deadline)
       await new Promise(r => setTimeout(r, 2000));
 
-      // Update local state with new position
       updateVaultPosition({
         vaultId: vault.id,
         shares: BigInt(Math.floor(estimatedShares * 1e6)),
@@ -94,9 +91,9 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
         {step === 'input' && (
           <div className="space-y-4">
             {/* Vault info */}
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-text-muted">Current APY</span>
-              <span className="text-success font-semibold">{formatApy(vault.blendedApy)}</span>
+            <div className="flex items-center justify-between text-sm bg-success/5 rounded-xl px-4 py-2.5">
+              <span className="text-text-secondary font-medium">Current APY</span>
+              <span className="text-success font-bold text-base">{formatApy(vault.blendedApy)}</span>
             </div>
 
             {/* Amount input */}
@@ -107,15 +104,15 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0"
-                  className="w-full h-16 bg-bg-elevated border border-border rounded-2xl text-center text-3xl font-bold text-text-primary outline-none focus:border-primary/60 font-numeric transition-colors"
+                  className="w-full h-16 bg-gray-50 border border-border rounded-2xl text-center text-3xl font-bold text-text-primary outline-none focus:border-primary/60 font-numeric transition-colors"
                   min={vault.minDeposit}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted text-sm font-medium">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted text-sm font-semibold">
                   USDC
                 </span>
               </div>
               {numAmount > 0 && numAmount < vault.minDeposit && (
-                <p className="text-xs text-danger mt-1.5 text-center">
+                <p className="text-xs text-danger mt-1.5 text-center font-medium">
                   Minimum deposit: {formatUsd(vault.minDeposit)}
                 </p>
               )}
@@ -133,13 +130,13 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
                 <CardRow
                   label="Estimated yearly return"
                   value={
-                    <span className="text-success">+{formatUsd(estimatedYearlyReturn)}</span>
+                    <span className="text-success font-bold">+{formatUsd(estimatedYearlyReturn)}</span>
                   }
                 />
                 {feeApplied > 0 && (
                   <CardRow
                     label="Swap fee (USDC → BTC)"
-                    value={<span className="text-danger">−{formatUsd(feeApplied)}</span>}
+                    value={<span className="text-danger font-medium">−{formatUsd(feeApplied)}</span>}
                   />
                 )}
                 <CardDivider className="my-0" />
@@ -155,7 +152,7 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
             )}
 
             {!isAuthenticated && (
-              <Card variant="elevated" className="border-primary/20">
+              <Card variant="elevated" className="border-primary/10">
                 <div className="flex items-start gap-3">
                   <Info size={16} className="text-primary mt-0.5 flex-shrink-0" />
                   <p className="text-sm text-text-secondary">
@@ -180,16 +177,16 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
         {step === 'confirm' && (
           <div className="space-y-4 animate-fade-in">
             <Card variant="elevated" className="space-y-3">
-              <CardRow label="Vault" value={vault.name} />
-              <CardRow label="Depositing" value={<span className="font-semibold">{formatUsd(numAmount)}</span>} />
-              <CardRow label="Expected APY" value={<span className="text-success">{formatApy(vault.blendedApy)}</span>} />
+              <CardRow label="Vault" value={<span className="font-bold">{vault.name}</span>} />
+              <CardRow label="Depositing" value={<span className="font-bold">{formatUsd(numAmount)}</span>} />
+              <CardRow label="Expected APY" value={<span className="text-success font-bold">{formatApy(vault.blendedApy)}</span>} />
               {feeApplied > 0 && (
                 <CardRow label="Swap fee" value={<span className="text-danger">−{formatUsd(feeApplied)}</span>} />
               )}
               <CardDivider />
               <CardRow
                 label="You receive ≈"
-                value={<span className="font-semibold">{estimatedShares.toFixed(4)} shares</span>}
+                value={<span className="font-bold">{estimatedShares.toFixed(4)} shares</span>}
               />
               <CardRow
                 label="Withdrawal lock"
@@ -215,7 +212,7 @@ export function DepositModal({ isOpen, onClose, vault }: DepositModalProps) {
 
         {step === 'success' && (
           <div className="text-center py-6 space-y-4 animate-scale-in">
-            <div className="w-16 h-16 rounded-full bg-success-muted flex items-center justify-center mx-auto animate-pulse-glow">
+            <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto animate-pulse-glow">
               <CheckCircle size={32} className="text-success" />
             </div>
             <div>

@@ -38,7 +38,7 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
       walletAddress,
       amount: numAmount,
       paymentMethod: selectedMethod,
-    }, true); // Opens in new tab
+    }, true);
     onClose();
   };
 
@@ -64,17 +64,16 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
               className="w-full text-left"
             >
               <Card
-                variant="elevated"
+                variant="default"
                 interactive
-                className="border-border hover:border-primary/30"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary-muted flex items-center justify-center text-lg">
+                    <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-lg">
                       ↓
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-text-primary">Receive Crypto</p>
+                      <p className="text-sm font-semibold text-text-primary">Receive Crypto</p>
                       <p className="text-xs text-text-muted">Send USDC to your wallet</p>
                     </div>
                   </div>
@@ -83,8 +82,8 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
               </Card>
             </button>
 
-            {/* Fiat onramp options via peer.xyz */}
-            <p className="text-xs text-text-muted px-1 pt-1">Buy with fiat — powered by peer.xyz</p>
+            {/* Fiat onramp options */}
+            <p className="text-xs text-text-muted font-semibold px-1 pt-1 uppercase tracking-wider">Buy with fiat</p>
             <div className="space-y-2">
               {ONRAMP_METHODS.filter(m => m.available).map((method) => (
                 <button
@@ -93,17 +92,16 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
                   className="w-full text-left"
                 >
                   <Card
-                    variant="elevated"
+                    variant="default"
                     interactive
-                    className="border-border hover:border-primary/30"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-bg-card flex items-center justify-center text-xl">
+                        <div className="w-10 h-10 rounded-2xl bg-gray-50 flex items-center justify-center text-xl">
                           {method.icon}
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-text-primary">{method.label}</p>
+                          <p className="text-sm font-semibold text-text-primary">{method.label}</p>
                           <p className="text-xs text-text-muted">{method.description}</p>
                         </div>
                       </div>
@@ -128,12 +126,12 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
 
         {step === 'amount' && selectedMethod && (
           <div className="space-y-4">
-            <button onClick={() => setStep('method')} className="text-sm text-primary flex items-center gap-1">
+            <button onClick={() => setStep('method')} className="text-sm text-primary font-semibold flex items-center gap-1">
               ← Back
             </button>
 
             <div className="text-center py-4">
-              <p className="text-text-muted text-sm mb-2">You pay</p>
+              <p className="text-text-muted text-sm mb-2 font-medium">You pay</p>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-4xl font-bold text-text-primary">$</span>
                 <input
@@ -154,7 +152,7 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
                 <button
                   key={a}
                   onClick={() => setAmount(a.toString())}
-                  className="h-9 rounded-xl bg-bg-elevated border border-border text-sm text-text-secondary hover:border-primary/50 hover:text-primary transition-all active:scale-95"
+                  className="h-9 rounded-xl bg-gray-50 border border-border text-sm font-semibold text-text-secondary hover:border-primary/50 hover:text-primary transition-all active:scale-95"
                 >
                   ${a >= 1000 ? '1K' : a}
                 </button>
@@ -167,7 +165,7 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
             </Button>
 
             <p className="text-[11px] text-text-muted text-center">
-              You'll be redirected to peer.xyz to complete payment.
+              You&apos;ll be redirected to peer.xyz to complete payment.
               USDC will arrive in your wallet in {ONRAMP_METHODS.find(m => m.id === selectedMethod)?.estimatedTime}.
             </p>
           </div>
@@ -175,22 +173,22 @@ export function OnrampModal({ isOpen, onClose, defaultAmount = 100 }: OnrampModa
 
         {step === 'crypto' && (
           <div className="space-y-4">
-            <button onClick={() => setStep('method')} className="text-sm text-primary">
+            <button onClick={() => setStep('method')} className="text-sm text-primary font-semibold">
               ← Back
             </button>
 
             <div className="text-center py-2">
-              <p className="text-sm text-text-secondary mb-4">
+              <p className="text-sm text-text-secondary mb-4 font-medium">
                 Send USDC or ETH to your wallet address on Ethereum
               </p>
 
               {/* QR Code placeholder */}
-              <div className="w-40 h-40 mx-auto rounded-2xl bg-white flex items-center justify-center mb-4">
-                <div className="w-32 h-32 bg-[repeating-conic-gradient(#000_0%_25%,#fff_0%_50%)] bg-[length:8px_8px] rounded" />
+              <div className="w-40 h-40 mx-auto rounded-2xl bg-gray-50 border-2 border-border flex items-center justify-center mb-4">
+                <div className="w-32 h-32 bg-[repeating-conic-gradient(#1A1A2E_0%_25%,#fff_0%_50%)] bg-[length:8px_8px] rounded" />
               </div>
 
-              <div className="flex items-center gap-2 bg-bg-elevated rounded-xl p-3 border border-border">
-                <p className="text-xs font-mono text-text-secondary flex-1 truncate">
+              <div className="flex items-center gap-2 bg-gray-50 rounded-xl p-3 border border-border">
+                <p className="text-xs font-mono text-text-primary flex-1 truncate">
                   {walletAddress}
                 </p>
                 <button

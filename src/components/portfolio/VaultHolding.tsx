@@ -26,13 +26,13 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2.5">
             <div className={cn(
-              'w-9 h-9 rounded-xl flex items-center justify-center text-lg',
-              isStablecoin ? 'bg-primary-muted' : 'bg-warning-muted'
+              'w-10 h-10 rounded-2xl flex items-center justify-center text-lg',
+              isStablecoin ? 'bg-primary/10' : 'bg-accent-coral/10'
             )}>
               {vault.icon}
             </div>
             <div>
-              <p className="text-sm font-semibold text-text-primary">{vault.name}</p>
+              <p className="text-sm font-bold text-text-primary">{vault.name}</p>
               <p className="text-xs text-text-muted">
                 {vault.underlyingVaults.map(v => v.asset).join(' · ')}
               </p>
@@ -45,11 +45,11 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
         {/* Value */}
         <div className="flex items-end justify-between mb-3">
           <div>
-            <p className="text-xl font-bold font-numeric text-text-primary">
+            <p className="text-2xl font-bold font-numeric text-text-primary">
               {formatUsd(position.valueUsd)}
             </p>
             <p className={cn(
-              'text-sm font-numeric',
+              'text-sm font-numeric font-semibold',
               position.unrealizedPnl >= 0 ? 'text-success' : 'text-danger'
             )}>
               {position.unrealizedPnl >= 0 ? '+' : ''}{formatUsd(position.unrealizedPnl)} all time
@@ -57,14 +57,14 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
           </div>
           <div className="text-right">
             <p className="text-xs text-text-muted">Deposited</p>
-            <p className="text-sm font-numeric text-text-secondary">
+            <p className="text-sm font-numeric font-medium text-text-secondary">
               {formatUsd(position.depositedUsd)}
             </p>
           </div>
         </div>
 
-        {/* Progress bar — shows gain */}
-        <div className="h-1.5 bg-bg-elevated rounded-full overflow-hidden mb-3">
+        {/* Progress bar */}
+        <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
           <div
             className={cn(
               'h-full rounded-full transition-all duration-1000',
@@ -76,8 +76,8 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
 
         {/* Withdrawal status */}
         {!position.withdrawalAvailable && position.withdrawalUnlockAt && (
-          <div className="flex items-center gap-2 text-xs text-text-muted mb-3">
-            <Lock size={11} />
+          <div className="flex items-center gap-2 text-xs text-text-muted mb-3 bg-warning/5 rounded-lg px-3 py-2">
+            <Lock size={11} className="text-amber-500" />
             <span>
               Withdrawal unlocks{' '}
               {formatRelativeTime(position.withdrawalUnlockAt)}
@@ -117,8 +117,8 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
           >
             <div
               className={cn(
-                'h-1 rounded-full',
-                isStablecoin ? 'bg-primary/40' : 'bg-amber-400/40'
+                'h-1.5 rounded-full',
+                isStablecoin ? 'bg-primary/30' : 'bg-accent-coral/30'
               )}
             />
           </div>
@@ -128,15 +128,15 @@ export function VaultHolding({ vault, position, onDeposit, onWithdraw }: VaultHo
   );
 }
 
-/** Empty state when no holdings */
+/** Empty state */
 export function EmptyPortfolio({ onEarn }: { onEarn: () => void }) {
   return (
     <div className="text-center py-10 space-y-4">
-      <div className="w-16 h-16 rounded-2xl bg-bg-elevated border border-border flex items-center justify-center mx-auto">
-        <span className="text-2xl">📈</span>
+      <div className="w-16 h-16 rounded-3xl bg-primary/10 flex items-center justify-center mx-auto">
+        <span className="text-3xl">📈</span>
       </div>
       <div>
-        <h3 className="text-base font-semibold text-text-primary">No holdings yet</h3>
+        <h3 className="text-lg font-bold text-text-primary">No holdings yet</h3>
         <p className="text-sm text-text-secondary mt-1">
           Deposit into a vault to start earning yield
         </p>
