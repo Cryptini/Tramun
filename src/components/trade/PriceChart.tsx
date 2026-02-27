@@ -1,0 +1,99 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { AreaChart, Area, Tooltip, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { useTradeStore } from '@/store/tradeStore';
+import { formatPrice } from '@/lib/utils/format';
+import { fetchCandles } from '@/lib/hyperliquid/api';
+import { cn } from '@/lib/utils/cn';
+
+const INTERVALS = ['5m', '15m', '1h', '4h', '1d'] as const;
+type Interval = typeof INTERVALS[number];
+
+function ChartTooltip({ active, payload }: { active?: boolean; payload?: Array<{ value: number }> }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-bg-elevated border border-border rounded-lg px-2.5 py-1.5 shadow-modal">
+      <p className="text-xs font-semibold text-text-primary font-numeric">
+        ${formatPrice(payload[0].value)}
+      </p>
+    </div>
+  );
+}
+
+export function PriceChart() {
+  const { selectedMarket } = useTradeStore();
+  const [interval, setInterval] = useState<Interval>('15m');
+  const [data, setData] = useState<Array<{ time: string; price: number }>>([]);
+
+  useEffect(() => {
+    const load = async () => {
+      const candles = await fetchCandles(selectedMarket.coin, interval, 60);
+      setData(candles.map(c => ({
+        time: new Date(c.time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        price: c.close,
+      })));
+    };
+    load();
+  }, [selectedMarket.coin, interval]);
+
+  const firstPrice = data[0]?.price ?? 0;
+  const lastPrice = data[data.length - 1]?.price ?? 0;
+  const isPositive = lastPrice >= firstPrice;
+  const strokeColor = isPositive ? '#10B981' : '#F43F5E';
+
+  return (
+    <div className="w-full">
+      {/* Interval selector */}
+      <div className="flex items-center gap-1 mb-3">
+        {INTERVALS.map((iv) => (
+          <button
+            key={iv}
+            onClick={() => setInterval(iv)}
+            className={cn(
+              'flex-1 h-7 rounded-lg text-xs font-medium transition-all',
+              interval === iv
+                ? 'bg-primary-muted text-primary'
+                : 'text-text-muted hover:text-text-secondary'
+            )}
+          >
+            {iv}
+          </button>
+        ))}
+      </div>
+
+      {/* Chart */}
+      <div className="h-48">
+        {data.length > 0 ? (
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: 0 }}>
+              <defs>
+                <linearGradient id="tradeGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={strokeColor} stopOpacity={0.2} />
+                  <stop offset="90%" stopColor={strokeColor} stopOpacity={0.01} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="time" hide />
+              <YAxis hide domain={['auto', 'auto']} />
+              <Tooltip
+                content={<ChartTooltip />}
+                cursor={{ stroke: strokeColor, strokeWidth: 1, strokeDasharray: '3 3' }}
+              />
+              <Area
+                type="monotone"
+                dataKey="price"
+                stroke={strokeColor}
+                strokeWidth={1.5}
+                fill="url(#tradeGradient)"
+                dot={false}
+                activeDot={{ r: 3, fill: strokeColor, strokeWidth: 0 }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="h-full skeleton rounded-xl" />
+        )}
+      </div>
+    </div>
+  );
+}
