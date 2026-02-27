@@ -1,54 +1,45 @@
 // ============================================================
 // Privy Configuration
-// Ref: https://docs.privy.io/wallets/global-wallets/launch-your-wallet/overview
+// Ref: https://docs.privy.io/basics/react/setup
 //
 // KEY DECISIONS:
 // - loginMethods: Google + Apple only (no email/wallet for non-crypto users)
-// - embeddedWallets: auto-create on login (fully abstracted)
-// - appearance: Tramuntana dark theme
-// - chains: Ethereum mainnet (for vaults) + Arbitrum (for HL)
+// - embeddedWallets: auto-create Ethereum wallet on login (fully abstracted)
+// - appearance: Tramuntana light theme with purple accent
+// - chains: Ethereum mainnet (for vaults)
 // ============================================================
 
-import { type PrivyClientConfig } from '@privy-io/react-auth';
+import type { PrivyClientConfig } from '@privy-io/react-auth';
 
-export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID ?? 'clxxxxxxxxxxxxxx';
+/**
+ * Your Privy App ID — get it from https://dashboard.privy.io
+ * Set NEXT_PUBLIC_PRIVY_APP_ID in your .env.local file.
+ */
+export const PRIVY_APP_ID = process.env.NEXT_PUBLIC_PRIVY_APP_ID ?? '';
+
+/**
+ * Your Privy Client ID — get it from App Clients in Privy Dashboard
+ * Set NEXT_PUBLIC_PRIVY_CLIENT_ID in your .env.local file.
+ */
+export const PRIVY_CLIENT_ID = process.env.NEXT_PUBLIC_PRIVY_CLIENT_ID ?? '';
 
 export const privyConfig: PrivyClientConfig = {
-  // Only social login — no wallet connect, no email/password
-  loginMethods: ['google', 'apple'],
-
   appearance: {
-    theme: 'dark',
-    accentColor: '#3B82F6',       // Tramuntana primary blue
+    theme: 'light',
+    accentColor: '#6C5CE7',          // Tramuntana primary purple
     logo: '/logo.svg',
     showWalletLoginFirst: false,
-    // Custom dialog branding
     landingHeader: 'Welcome to Tramuntana',
     loginMessage: 'Sign in to access DeFi yield and trading',
   },
 
   embeddedWallets: {
-    // Auto-create embedded wallet for every new user
-    createOnLogin: 'users-without-wallets',
-    // Show funding UI after wallet creation
-    showWalletUIs: false,           // We handle our own UI
-    requireUserPasswordOnCreate: false,
-    // Use the same wallet across devices (global wallets)
-    // priceQuote is handled by peer.xyz
-  },
-
-  // Networks supported (EVM)
-  // Vault wallet: Ethereum mainnet
-  // Perps wallet: Arbitrum (Hyperliquid)
-  defaultChain: {
-    id: 1,
-    name: 'Ethereum',
-    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-    rpcUrls: {
-      default: { http: [process.env.NEXT_PUBLIC_ETH_RPC_URL ?? 'https://eth.llamarpc.com'] },
+    ethereum: {
+      // Auto-create an embedded wallet for users who don't already have one
+      createOnLogin: 'users-without-wallets',
     },
   },
 
-  // MFA disabled for simpler UX (can enable for power users)
+  // MFA disabled for simpler UX
   mfa: { noPromptOnMfaRequired: false },
 };

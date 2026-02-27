@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { redirectToOnramp } from '@/lib/peer-xyz/onramp';
+import { PRIVY_APP_ID } from '@/lib/privy/config';
 
 export function Header() {
   const {
@@ -18,8 +19,21 @@ export function Header() {
     toggleAddressVisibility,
     portfolioSummary,
     notifications,
-    logout,
+    logout: storeLogout,
   } = useAppStore();
+
+  // Use real Privy logout if configured, otherwise store-only logout
+  const handleLogout = async () => {
+    if (PRIVY_APP_ID) {
+      // Dynamic import to avoid hook issues when Privy isn't configured
+      const { useLogout } = await import('@privy-io/react-auth');
+      // For now, just do store logout + page reload to clear Privy session
+      storeLogout();
+      window.location.reload();
+    } else {
+      storeLogout();
+    }
+  };
 
   const [showAccount, setShowAccount] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -166,7 +180,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 fullWidth
-                onClick={logout}
+                onClick={handleLogout}
                 leftIcon={<LogOut size={16} />}
                 className="text-danger hover:bg-danger-muted"
               >

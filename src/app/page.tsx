@@ -7,6 +7,7 @@ import { EarnTab } from '@/components/tabs/EarnTab';
 import { PortfolioTab } from '@/components/tabs/PortfolioTab';
 import { TradeTab } from '@/components/tabs/TradeTab';
 import { LoginScreen } from '@/components/auth/LoginScreen';
+import { AuthSync } from '@/components/auth/AuthSync';
 import { useAppStore } from '@/store/appStore';
 
 function AppShell() {
@@ -25,6 +26,9 @@ function AppShell() {
 
   return (
     <main className="flex flex-col h-dvh bg-white overflow-hidden">
+      {/* Syncs Privy auth state → Zustand (invisible) */}
+      <AuthSync />
+
       {/* Fixed header */}
       <Header />
 
